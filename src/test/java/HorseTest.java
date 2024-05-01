@@ -94,7 +94,7 @@ public class HorseTest {
     public void moveFormula(final Double random) {
         try (MockedStatic<Horse> mockedHorse = Mockito.mockStatic(Horse.class)) {
             mockedHorse.when(() -> Horse.getRandomDouble(any(Double.class), any(Double.class))).thenReturn(random);
-            Double origDistance = testHorse.getDistance();
+            double origDistance = testHorse.getDistance();
             testHorse.move();
             assertEquals(origDistance + testHorse.getSpeed() * random, testHorse.getDistance());
         }
