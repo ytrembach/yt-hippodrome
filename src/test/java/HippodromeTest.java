@@ -6,13 +6,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static java.lang.Math.random;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HippodromeTest {
 
-    public static final String TEST_HORSE_NAME_PREFIX = "TEST_HORSE_";
+    public static final String TEST_HORSE_NAME_PREFIX = "TEST_HORSE";
     public static final Double MIN_TEST_HORSE_SPEED = 1D;
     public static final Double MAX_TEST_HORSE_SPEED = 5D;
 
@@ -24,19 +25,19 @@ public class HippodromeTest {
 
     // horse lists generation
 
-    Horse newHorse(Integer i) {
-        return new Horse(TEST_HORSE_NAME_PREFIX + i,
+    Horse newHorse() {
+        return new Horse(TEST_HORSE_NAME_PREFIX,
                 MIN_TEST_HORSE_SPEED + random() * (MAX_TEST_HORSE_SPEED - MIN_TEST_HORSE_SPEED));
     }
 
-    Horse newMockedHorse(Integer i) {
+    Horse newMockedHorse() {
         return Mockito.mock(Horse.class);
     }
 
-    List<Horse> getTestHorses(final int count, Function<Integer, Horse> horseFunction) {
+    List<Horse> getTestHorses(final int count, Supplier<Horse> horseFunction) {
         List<Horse> testHorses = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            testHorses.add(horseFunction.apply(i));
+            testHorses.add(horseFunction.get());
         }
         return testHorses;
     }
