@@ -1,6 +1,4 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -8,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static java.lang.Math.random;
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +34,7 @@ public class HippodromeTest {
     }
 
     List<Horse> getTestHorses(final int count, Function<Integer, Horse> horseFunction) {
-        List<Horse> testHorses = new ArrayList<Horse>();
+        List<Horse> testHorses = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             testHorses.add(horseFunction.apply(i));
         }
@@ -65,8 +62,7 @@ public class HippodromeTest {
     @Test
     public void getHorsesInOrder() {
         final List<Horse> actual = testHippodrome.getHorses();
-        testHorses.stream()
-                .forEach(h -> assertEquals(testHorses.indexOf(h), actual.indexOf(h)));
+        testHorses.forEach(h -> assertEquals(testHorses.indexOf(h), actual.indexOf(h)));
     }
 
     @Test
@@ -76,8 +72,7 @@ public class HippodromeTest {
         testHippodrome = new Hippodrome(testHorses);
 
         testHippodrome.move();
-        testHorses.stream()
-                .forEach(h -> Mockito.verify(h).move());
+        testHorses.forEach(h -> Mockito.verify(h).move());
     }
 
     @Test
@@ -87,7 +82,7 @@ public class HippodromeTest {
         }
         assertEquals(testHorses.stream()
                         .max(Comparator.comparingDouble(Horse::getDistance))
-                        .get(),
+                        .orElseThrow(),
                 testHippodrome.getWinner());
 
     }
