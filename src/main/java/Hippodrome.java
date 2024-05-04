@@ -36,7 +36,6 @@ public class Hippodrome {
     public Horse getWinner() {
         return horses.stream()
                 .max(Comparator.comparing(Horse::getDistance))
-                .get();
+                .orElseThrow();
     }
 }
-
